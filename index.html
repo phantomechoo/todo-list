@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do list 📌</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 1rem;
+        font-family: "Patrick Hand", cursive;
+        color: #A59389;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 570px;
+        background-color: #A59389;
+        border-radius: 20px;
+        padding: 1rem;
+        box-shadow: 0 5px 10px #aca8a7;
+        transition: transform 0.4s ease;
+    }
+
+    .container:hover {
+        transform: translateY(-10px);
+    }
+
+    .header {
+        width: 100%;
+        background-color: #FBECF5;
+        border-radius: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .header h1 {
+        margin-left: 15px;
+        font-size: 24px;
+        font-weight: 100;
+    }
+
+    .header img {
+        width: 35px;
+        height: auto;
+        margin-right: 10px;
+    }
+
+    .todo-list {
+        width: 100%;
+        background-color: #FBECF5;
+        border-radius: 15px;
+        margin-top: 30px;
+        padding: 20px;
+        font-size: 22px;
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    footer {
+        color: #FBECF5;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 18px;
+        font-weight: 100;
+    }
+
+    footer a {
+        text-decoration: none;
+        color: #FBECF5;
+        transition: all 0.4s ease;
+        font-size: 20px;
+    }
+
+    footer a:hover {
+        color: #ffd4ee;
+    }
+
+    .todo {
+        margin-bottom: 8px;
+    }
+
+    .todo-align {
+        display: flex;
+        align-items: center;
+    }
+
+    .todo-align img {
+        width: 25px;
+        height: auto;
+    }
+
+    .todo-align label {
+        margin-left: 8px;
+    }
+
+    .btn-cont {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+        margin-left: 5px;
+    }
+
+    #addBtn {
+        background: none;
+        border: none;
+        transition: transform 0.4s ease;
+        cursor: pointer;
+    }
+
+    #addBtn:hover {
+       transform: scale(1.2);
+    }
+
+    #addBtn img {
+        width: 36px;
+        height: auto;
+    }
+
+    #newToDo {
+        font-family: "Patrick Hand", cursive;
+        font-size: 22px;
+        color: #A59389;
+        background: none;
+        border: none;
+        margin-left: 8px;
+        
+    }
+
+    #newToDo:focus {
+        outline: none;
+        
+    }
+    
+    ::placeholder {
+        color: #a8a8a8;
+    }
+
+    .task-text {
+        margin-left: 8px;
+        flex: 1;
+    }
+
+    .delete {
+        cursor: pointer;
+        transition: transform 0.4s ease;
+    }
+
+    .delete:hover {
+        transform: scale(1.2);
+    }
+
+    .label-align {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex: 1;
+    }
+
+    .completed { text-decoration: line-through; color: #aaa; }
+
+
+    input[type= "checkbox"] {
+        accent-color: #A59389;
+        width: 17px;
+        height: 17px;
+    }
+
+</style>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>to-do list</h1>
+            <img src="./close.svg" alt="">
+        </div>
+
+    <div class="todo-list">
+        <div class="todo">
+            <div class="todo-align">
+                <input type="text" placeholder="add task.." id="newToDo">
+            </div>
+        </div>
+
+        <div class="btn-cont">
+            <button id="addBtn"><img src="./add.svg" alt=""></button>
+        </div>
+    </div>
+
+
+        <footer>Made by <a href="https://www.instagram.com/senanurbuyuksolak/" title="click ♡">Sena</a> ♡</footer>
+    </div>
+
+    <script>
+        const todoList = document.querySelector(".todo-list");
+        const addBtn = document.getElementById("addBtn");
+        const newToDo = document.getElementById("newToDo");
+
+
+        function addTask () {
+            let value = newToDo.value.trim();  // kullanıcının yazdığı metni alıyoruz .trim() de baştaki ve sondaki boşlukları siler
+
+            if (value === "") {  // eğer input boşsa uyarı verir. kullanıcı boş görev eklemesin diye bunu yapıyoruz
+                alert("Please enter a add task!");
+                return;
+            }
+
+            const toDoDiv = document.createElement("div");
+            toDoDiv.classList.add("todo");
+
+            const todoAlignDiv = document.createElement("div");
+            todoAlignDiv.classList.add("todo-align");
+
+            const checkBoxİnput = document.createElement("input");
+            checkBoxİnput.type = "checkbox";
+
+            const labelAlign = document.createElement("div");
+            labelAlign.classList.add("label-align");
+
+            const label = document.createElement("label");
+            label.classList.add("task-text");
+            label.textContent = value;
+
+            const deleteImg = document.createElement("img");
+            deleteImg.src = "./delete.svg";
+            deleteImg.classList.add("delete");
+
+            labelAlign.appendChild(label);
+            labelAlign.appendChild(deleteImg);
+            todoAlignDiv.appendChild(checkBoxİnput);
+            todoAlignDiv.appendChild(labelAlign);
+            toDoDiv.appendChild(todoAlignDiv);
+
+            const inputTodo = newToDo.closest(".todo");
+            todoList.insertBefore(toDoDiv, inputTodo);
+
+            newToDo.value = "";
+
+            checkBoxİnput.addEventListener("change", () => {
+                label.classList.toggle("completed");
+            });
+
+            deleteImg.addEventListener("click", () => {
+                toDoDiv.remove();
+            });
+        };
+
+        addBtn.addEventListener("click", addTask);
+
+
+        newToDo.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                addTask();
+            }
+        })
+    </script>
+</body>
+</html>
